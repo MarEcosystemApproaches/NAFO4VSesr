@@ -65,7 +65,7 @@ NAFOSubunits_sf<-"NAFOSubunits_sf.rda"
 load(file.path(dat.dir, coast))
 load(file.path(dat.dir, NAFOSubunits_sf))
 
-bbox_coords <- c(xmin = -73, xmax = -55, ymin = 39, ymax = 48)
+bbox_coords <- c(xmin = -66, xmax = -50, ymin = 39, ymax = 48)
 
 mar_nafo4VS<-NAFOSubunits_sf |>
   filter(NAFO_2 %in% c("4VS")) 
@@ -131,9 +131,9 @@ ERtable
 # A. Pressures and Stressors {#pressuresandstressors}
 
 ## Climate and oceanography 
-The NAFO4VS area is strongly influenced by natural variability of the climate system (e.g., North Atlantic Oscillation) and, therefore, long-term monitoring is needed to determine how anthropogenic climate change is affecting ocean temperatures. 
+The management area is strongly influenced by natural variability of the climate system (e.g., North Atlantic Oscillation) and, therefore, long-term monitoring is needed to determine how anthropogenic climate change is affecting ocean temperatures. 
 
-Changes in climate can directly and indirectly stock status by affecting the distribution, seasonal timing, and physiology of marine species.
+Changes in climate can directly and indirectly impact stock status by affecting the distribution, seasonal timing, physiology, migration and spawning of marine species.
 
 ### North Atlantic Oscillation Index
 [Hebert et al. 2024](https://publications.gc.ca/collections/collection_2024/mpo-dfo/Fs97-18-380-eng.pdf) (see Section 2.1)
@@ -159,8 +159,7 @@ dd <- "dd_nao_.Rdata"
 
 \newpage
 ### Sea Surface Temperature Anomaly
-Temperature anomalies are the deviations from the long-term means, or as standardized
-anomalies they are the anomaly divided by the Standard Deviation (SD). If the data permit, the long-term means and SDs are calculated for the 30-year base period of 1991–2020. The use of standardized anomalies and the same base period allow direct comparison of anomalies among sites and variables.
+Temperature anomalies are the deviations from the long-term means, or as standardized anomalies they are the anomaly divided by the Standard Deviation (SD). If the data permit, the long-term means and SDs are calculated for the 30-year base period of 1991–2020. The use of standardized anomalies and the same base period allow direct comparison of anomalies among sites and variables.
 
 [Hebert et al. 2024](https://publications.gc.ca/collections/collection_2024/mpo-dfo/Fs97-18-380-eng.pdf) (see Section 3)
 
@@ -186,7 +185,7 @@ psstSatellite4Vs
 
 ```
 
-- The annual SST anomalies during 2023 were higher than average and SST remained above normal, with the last four years being the four warmest years in the NAFO 4VS. A regime shift algorithm to detect a step change using mean levels was applied to the annual time-series (Rodionov 2004). Over the length of the record, the temperature has three distinct periods at all regions, a relatively cooler period from 1982 to 1993, near the climatological mean from 1994 to 2011, and a relatively warmer period from 2012 to present.
+- The annual SST anomalies during 2023 were higher than average and SST remained above normal, with the last four years being the four warmest years in the NAFO 4VS. A regime shift algorithm to detect a step change using mean levels was applied to the annual time-series ([Rodionov 2004](https://doi.org/10.1029/2004GL019448). Over the length of the record, the temperature has three distinct periods at all regions, a relatively cooler period from 1982 to 1993, near the climatological mean from 1994 to 2011, and a relatively warmer period from 2012 to present.
 
 \newpage 
 ### Bottom Temperature Anomaly
@@ -242,11 +241,14 @@ pbt_4Vs<-plot_indicator(BottomT_ind_4Vs, YEAR, Bottom_Temp, y_label="4Vs Bottom 
 ```
 - Over the past two decades, the Scotian Shelf has incurred rapid warming due to the increased dominance of Warm Slope Water. 
 
-- SST in NAFO 4VS between 2020-2024 is above the reference period mean (1991-2020), indicating above average sea temperatures in the NAFO 4VS over recent years. However the bottom temperature in the 2023-2024 period in NAFO 4VS is near the period mean. 
+- SST in NAFO 4VS between 2020-2024 is above the reference period mean (1991-2020), indicating above average sea temperatures in the NAFO 4VS over recent years. 
+
+- Bottom temperature in the 2023-2024 period in NAFO 4VS is near the period mean indicating a recent cooling period after record warm bottom temperatures from 2012-2020 in the management area.
+
 
 \newpage
 ### Stratification, salinity
-```{r, fig.align="center", echo = FALSE, fig.pos='H',fig.cap="Dissolved oxygen (mmol/L) from winkler bottle measurements for the ESS. Stratification and salinity (ppt) for the ESS from 1970-2018. Dashed lines denote the long-term mean, solid lines denote ."}
+```{r, fig.align="center", echo = FALSE, fig.pos='H',fig.cap="Stratification and salinity (ppt) for the ESS from 1970-2018. Dashed lines denote the long-term mean, solid lines denote ."}
 dat.dir<-here::here("data")
 
 SSenv <- "SS_environmental_indicators.Rdata"
@@ -268,7 +270,7 @@ pstrat + psal
 
 ```
 
-- Salinity and stratification have been generally higher, with more years above the long-term mean in the ESS since the early 1990s. In later years (2018), both were slightly below the long-term mean, but within a normal range. These trends are consistent with SST trends for the ESS 
+- Salinity and stratification in the Eastern Scotian Shelf (NAFO 4Vn, 4Vs, 4W) have been generally higher, with more years above the long-term mean in the ESS since the early 1990s. In later years (2018), both were slightly below the long-term mean, but within a normal range. These trends are consistent with SST trends for the ESS.
 
 ### Ocean Acidification
 
@@ -297,6 +299,46 @@ knitr::include_graphics(here("figures", "SSPs_2040P_change_annual.png"))
 # B. Ecological {#ecological}
 
 ## Commercial Fishery 
+
+Commercial fishing is an activity that impacts the ecology of a management area through removals of fish from the ecosystem. 
+
+### Main Fisheries
+
+```{r ,fig.align="center", echo = FALSE,fig.pos='H', fig.pos='H',fig.width=11.7, fig.height=8.3, fig.cap="Main fisheries in NAFO 4VS by landings from all countries from 1960-2023. Data is from the NAFO STATLAN21A database."}
+
+dat.dir<-here::here("data")
+NAFO_STATLAN21A <- "NAFO_STATLAN21A.Rdata"
+load(file.path(dat.dir, NAFO_STATLAN21A))
+
+top5_landings <- NAFO_STATLAN21A |> 
+  filter(Division == "4VS") |>
+  rename(YEAR = Year, species_name = `Species Name`, weight_mt = `Metric Tonnes`) |>
+  group_by(YEAR, species_name) |>
+  summarize(weight_mt = sum(weight_mt, na.rm = TRUE), .groups = "drop") |>
+  group_by(YEAR) |>
+  slice_max(order_by = weight_mt, n = 5, with_ties = FALSE) |>
+  ungroup()
+              #aggregate by MT of each spp. why are there 7 canadas?
+
+p5fisheries<-ggplot(top5_landings, aes(x = as.factor(YEAR), y = weight_mt, fill = species_name)) +
+  geom_bar(stat = "identity") +
+  scale_fill_viridis_d(option = "C") +   # option: D, C, etc.; try others!
+  labs(
+    x = "Year",
+    y = "Landings (t)",
+    fill = "Species"
+  ) +
+  theme_minimal() +
+    theme(
+    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)
+    ) +
+  guides(fill = guide_legend(ncol = 1))
+           
+p5fisheries
+
+```
+
+- The five main fisheries in the NAFO 4VS area in 2023 were Surf clam, Atlantic redfishes, clams, shrimp (northern prawn), Atlantic halibut. 
 
 ### Fishing Pressure
 [Bundy et al. 2017](https://publications.gc.ca/site/eng/9.845487/publication.html) (see Table S4 for definitions, see Table S5 for species categories)
@@ -346,17 +388,17 @@ pa4<-plot_indicator(fp_inv, YEAR, FP_INVERTEBRATES, y_label="Invertebrate FP")
 
 ```
 
-- The 2018 fishing pressures (removed to better reflect the long-term means) are artificially high due to the lack of Summer Research Vessel survey in the ESS for that year, while landings remained stable.
+- The 2018 fishing pressures (removed to better reflect the long-term means) are artificially high due to the lack of Summer Research Vessel survey in NAFO 4VS for that year, while landings remained stable.
 
-- The latest robust estimates of overall fishing pressure in the ESS (2020) has been below the long-term average since around 1995. 
+- The latest robust estimates of overall fishing pressure in NAFO 4VS (2020) has been below the long-term average since around 1995. 
 
-- Fishing pressure on gadoids and forage fish in the ESS have been below the long-term mean since the 1990s. In contrast, fishing pressure on invertebrates has been close to the long-term average in recent years.
+- Fishing pressure on gadoids and forage fish in NAFO 4VS have been below the long-term mean since the 1990s. In contrast, fishing pressure on invertebrates has been close to the long-term average in recent years.
 
 \newpage
 ### Commercial Landings
 [Bundy et al. 2017](https://publications.gc.ca/site/eng/9.845487/publication.html) (see Table S4 for definitions, see Table S5 for species categories)
 
-```{r, fig.align="center", echo = FALSE, fig.pos='H',fig.height=8, fig.width=10, fig.cap ="Commercial landings (kg) collected from NAFO, ZIF and MARFIS databases for species categories in the ESS. Dashed lines represent the mean, solid green lines denote ± standard deviation (SD). Purple, shaded areas are the latest 5 years of available data."}
+```{r, fig.align="center", echo = FALSE, fig.pos='H',fig.height=8, fig.width=10, fig.cap ="Commercial landings (kg) collected from NAFO, ZIF and MARFIS databases for species categories. Dashed lines represent the mean, solid green lines denote ± standard deviation (SD). Purple, shaded areas are the latest 5 years of available data."}
 
 dat.dir<-here::here("data")
 eco_indicators<- "eco_indicators_nafo.Rdata"
@@ -436,12 +478,14 @@ pbathy
 ## Productivity 
 Productivity relates to the amount of energy or biomass generated in an ecosystem, providing energy to consumers. A number of factors play a role in primary and secondary production including nitrate, chlorophyll, bloom statistics, *Calanus finmarchicus* biomass, and zooplankton biomass.
 
-### Nitrate, Chlorophyll, Bloom stats, *Calanus finmarchicus*, Zooplankton Biomass
+Such indicators are generally coupled to timing shifts in managed stocks since these can result in changes in habitat quality or food availability within the year. Changes in the timing phytoplankton blooms and shifts in zooplankton communities are thought to be critical indicators of changes in ecosystem productivity. 
+
+### Nitrate, Chlorophyll
 [Casault et al. 2024](https://publications.gc.ca/collections/collection_2024/mpo-dfo/Fs97-6-3589-eng.pdf)
 
  The amount of available nutrient supply for phytoplankton production is represented by surface (0-50 m) and subsurface (50-150 m) nutrient concentrations
 
-```{r fig.align="center", echo = FALSE, fig.pos='H', fig.cap="Nitrate 0-50m, Nitrate 50-150, integrated_chlorophyll 1-100m from Louisburg Line (LL) that occurs within NAFO 4VS,  from 1999-2023. Dashed lines represent the mean, solid green lines denote ± standard deviation (SD). Purple, shaded areas are the latest 5 years of available data. "}
+```{r fig.align="center", echo = FALSE, fig.pos='H', fig.cap="Nitrate 0-50m, Nitrate 50-150, integrated chlorophyll 1-100m from Louisburg Line (LL) that occurs within NAFO 4VS,  from 1999-2023. Dashed lines represent the mean, solid green lines denote ± standard deviation (SD). Purple, shaded areas are the latest 5 years of available data."}
 # dat.dir<-here::here("data")
 # AZMP_nutrients<- "AZMP_nutrients.Rdata"
 #   load(file.path(dat.dir, AZMP_nutrients))
@@ -465,7 +509,9 @@ ph4<-plot_indicator(nitrate_50_150, year, integrated_nitrate_50_150, y_label="Ni
 ph1<-plot_indicator(PP_ind, year, integrated_chlorophyll_0_100, y_label="Integrated Chlorophyll 0-100m")
 
 (ph3/ph4/ph1)
+
 ```
+
 - The latest year (2023) of nitrate values show a decrease from the previous year, but both are within the mean range. 
 
 - Integrated chlorophyll has increased in 2023, and also remains within the mean range. 
@@ -503,10 +549,10 @@ pbm<-plot_indicator(BM_ind, YEAR, bloom_magnitude, y_label="Bloom magnitude")
 (pbs/pbd)|(pba/pbm)
 
 ```
-- In the ESS bloom statistics are generally within the long-term mean range for 2020, and show no trend over time. 
+- In the ESS bloom statistics are within the long-term mean range for the latest year (2020), and show no long-term or short term (5 year) trend over time. 
 
 ### *Calanus finmarchicus*, Zooplankton Biomass
-```{r fig.align="center", echo = FALSE,fig.pos='H', fig.cap=" *C.finmarchicus*, and meso zooplankton biomass (dry weight), from NAFO 4V. Dashed lines represent the mean, solid green lines denote ± standard deviation (SD). Purple, shaded areas are the latest 5 years of available data. "}
+```{r fig.align="center", echo = FALSE,fig.pos='H', fig.cap="Zooplankton biomass (dry weight), from NAFO 4V. Dashed lines represent the mean, solid green lines denote ± standard deviation (SD). Purple, shaded areas are the latest 5 years of available data. "}
 azmpdata::Zooplankton_Seasonal_Broadscale
  
    CF_ind_4V<-Zooplankton_Seasonal_Broadscale|>
@@ -521,15 +567,14 @@ azmpdata::Zooplankton_Seasonal_Broadscale
   
    
 pcf4v<-plot_indicator(CF_ind_4V, YEAR, Calanus_finmarchicus, y_label="4V C. finmarchicus")
-pzp4v<-plot_indicator(ZP_ind_4V, YEAR, Zooplankton_Biomass, y_label="4V Zooplankton biomass")   
+pzp4v<-plot_indicator(ZP_ind_4V, YEAR, Zooplankton_Biomass, y_label="4V meso-zooplankton")   
 
 
 (pcf4v/pzp4v)
 ```
-TODOadd more text
-- The most recent estimates in NAFO 4V of biomass of *C. finmarchicus* has been lower than the long-term average in 2023.
+- The most recent estimates (2023) *C. finmarchicus* biomass in NAFO 4V has been lower than the long-term average.
 
-- Most recent estimates of zooplankton biomass has average in NAFO 4V
+- Most recent estimates of zooplankton biomass remain close to average since 2019 in NAFO 4V.
 
 \newpage
 ### Large Fish Indicator (LFI)
@@ -554,9 +599,9 @@ pLFI<-MAReco::plot_indicator(LFI, YEAR, LargeFishIndicator, y_label="Large Fish 
 
 (pLFI)
 ```
-- LFI in the ESS area has varied over time across two periods pre and post the mid 1990s. Latest four years indicate that LFI is below the long-term mean and indicate that structure and functioning of NAFO 4VS ecosystem may be unbalanced with a lower proportion of large fish to small fish in the ecological community. 
 
-- For smaller invertebrates, this would 
+- LFI in the NAFO 4VS area has varied over time across two periods pre and post the mid 1990s. Latest four years indicate that LFI is below the long-term mean and indicate that structure and functioning of NAFO 4VS ecosystem may currently be more dominated by smaller fish and invertebrates in the ecological community. 
+
 
 ### Predator index
 *in development*
@@ -606,9 +651,9 @@ eco_indicators<- "eco_indicators_nafo.Rdata"
   
 ```
  
-- Anomalous low values in 2018 are due to lack of RV survey data for the ESS, and have been removed.  
+- Anomalous low values in 2018 are due to lack of RV survey data for the NAFO 4VS, and have been removed.  
 
-- Biodversity measures through time in the ESS indicate that the ESS is currently generally composed of fewer dominant species. While improving sampling protocols in the RV surveys have increased Margalef Richness over the last 5 years, the species diversity has been lower (lower mean range) in the last 5 years. Heips evenness has been relatively low since the 2000s, the low values (<0.2) is consistent with a community with generally fewer, species that are highly abundant. 
+- Biodversity measures through time in the NAFO 4VS indicate that the NAFO 4VS is currently generally composed of fewer dominant species. While improving sampling protocols in the RV surveys have increased Margalef Richness over the last 5 years, the species diversity has been lower (lower mean range) in the last 5 years. Heips evenness has been relatively low since the 2000s, the low values (<0.2) is consistent with a community with generally fewer, species that are highly abundant. 
 
 ### Guild-level Biomass
 
@@ -663,7 +708,7 @@ eco_indicators<-eco_indicators_nafo
 pi1/pi2/pi3/pi4
   
 ```
-- Anomalous low values in 2018 are due to lack of RV survey data for the ESS, and have been removed. 
+- Anomalous low values in 2018 are due to lack of RV survey data for the NAFO 4VS, and have been removed. 
 
 - Generally, due to low catchability of invertebrates in the RV survey, invertebrates are likely underestimated, but trends are considered reliable.
 
@@ -671,7 +716,7 @@ pi1/pi2/pi3/pi4
 
 - Since the collapse of gadoids in the lates 1980s and early 1990s, biomass has been low. It increased to vary around the long-term mean from the mid 2000s to mid 2010s, but has declined since.
 
-- Forage fish have been relatively stable in the ESS with annual biomass within or above the long-term mean since the mid-1980s. In the last couple years forage fish biomass has been close to the long-term mean.
+- Forage fish have been relatively stable in the NAFO 4VS with annual biomass within or above the long-term mean since the mid-1980s. In the last couple years forage fish biomass has been close to the long-term mean.
 
 ## Non-Target Species 
 
@@ -682,9 +727,11 @@ pi1/pi2/pi3/pi4
 
 ## Commercial Fishery
 
+Commercial fishing is an important activity in the Maritimes Region that provides both cultural and economic value to coastal communities. 
+
 ### Landed value (CAD) by species catagory
 
-This is the landed value of groups of species for the ESS region. Exploration of this data was based on published overviews of Canadian [Seafisheries landings](https://www.dfo-mpo.gc.ca/stats/commercial/sea-maritimes-eng.htm).
+This is the landed value of groups of species for the NAFO 4VS region. Exploration of this data was based on published overviews of Canadian [Seafisheries landings](https://www.dfo-mpo.gc.ca/stats/commercial/sea-maritimes-eng.htm).
 
 ```{r fig.align="center", echo = FALSE,fig.width = 10,fig.pos='H', fig.cap="Landed value of species categories since 1990 for NAFO 4VS. Area in purple is preliminary data and subject to change." }
 dat.dir<-here::here("data")
@@ -718,9 +765,9 @@ plv<- MAReco::plot_multiple_indicators(Landings_value, YEAR, Landed_Value_CAD, S
   
 ```
 
-- Historical trends indicate that groundfish had higher landed value in the 1990s than mollusc and crustaceans or pelagic and estuarial fish in the ESS, but recent landings are dominated by mollusc and crustaceans. 
+- Historical trends indicate that groundfish had higher landed value in the 1990s than mollusc and crustaceans or pelagic and estuarial fish in the NAFO 4VS, but recent landings are dominated by mollusc and crustaceans. 
 
-- In the last 5 years, the landed value of mollusc and crustaceans in the ESS have fluctuated while still remaining high. Although conservation concerns for many invertebrate species is low, variability in landed value could have impacts to coastal communities. In contrast, recent 5 year landed values of groundfish and pelagic groups have remained stable in the ESS. 
+- In the last 5 years, the landed value of mollusc and crustaceans in NAFO 4VS have fluctuated while still remaining high. Although conservation concerns for many invertebrate species is low, variability in landed value could have impacts to coastal communities. In contrast, recent 5 year landed values of groundfish and pelagic groups have remained stable in the NAFO 4VS. 
 
 # D. Social-Cultural
 
